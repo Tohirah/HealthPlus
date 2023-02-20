@@ -12,5 +12,6 @@ namespace HealthPlus.Domain.Entities
         public string EmergencyContact { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public MedicalRecord MedicalRecord { get; set; }
     }
 }

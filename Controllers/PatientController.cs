@@ -17,12 +17,45 @@ namespace HealthPlus.Controllers
             _patientService = patientService;
         }
 
-        [HttpPost]
+        [HttpPost("CreatePatient")]
         public IActionResult CreatePatient([FromBody] CreatePatientRequestModel request)
         {
             var response = _patientService.CreatePatient(request);
 
-            return response.Status?Ok(response) : BadRequest(response);
+            return response.Status ? Ok(response) : BadRequest(response);
+        }
+
+
+        [HttpGet("getpatientbyid/id")]
+        public IActionResult Getpatientbyid([FromQuery] int id)
+        {
+            var response = _patientService.GetPatientById(id);
+
+            return (response != null) ? Ok(response) : NotFound(response);
+        }
+
+        [HttpGet("getPatientByPatientNumber/patientNumber")]
+        public IActionResult GetPatientByPatientNumber([FromQuery] string patientNumber)
+        {
+            var response = _patientService.GetPatientByPatientNumber(patientNumber);
+
+            return response.Status ? Ok(response) : NotFound(response.Message);
+        }
+
+        [HttpGet("getPatients")]
+        public IActionResult GetPatients()
+        {
+            var response = _patientService.GetPatients();
+
+            return Ok(response);
+        }
+
+
+        [HttpPut("updatePatient/{id}")]
+        public IActionResult UpdatePatient([FromRoute] int id,  UpdatePatientRequestModel request)
+        {
+            var response = _patientService.UpdatePatient(id, request);
+            return response.Status ? Ok(request) : BadRequest(response);
         }
     }
 }
